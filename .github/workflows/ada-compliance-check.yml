@@ -28,12 +28,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Check for package.json and install dependencies
         run: |
@@ -43,28 +38,6 @@ jobs:
           else
             echo "No package.json found, skipping project dependencies..."
           fi
-          
-          # Install global dependencies for ADA checking
-          echo "Installing global dependencies..."
-          npm install -g @github/copilot-cli
-
-      - name: Install Salesforce CLI
-        run: |
-          npm install -g @salesforce/cli
-
-      - name: Setup GitHub Copilot CLI
-        run: |
-          # Install GitHub CLI first
-          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-          sudo apt update
-          sudo apt install gh -y
-          
-          # Authenticate with GitHub token
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-          
-          # Install Copilot extension
-          gh extension install github/gh-copilot || echo "Copilot extension may already be installed"
 
       - name: Get changed files
         id: changed-files
