@@ -337,7 +337,105 @@ textarea,
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+
+/* Focus indicators for all interactive elements */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus,
+[role="button"]:focus,
+[tabindex]:focus {
+  outline: 2px solid #0070d2 !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 0 3px #0070d2 !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: ButtonText !important;
+  }
+
+  .custom-button,
+  .add-to-cart-btn,
+  .submit-btn {
+    border: 2px solid ButtonText !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Ensure minimum touch target sizes */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+.custom-button,
+.add-to-cart-btn,
+.submit-btn,
+.action-btn {
+  min-height: 44px !important;
+  min-width: 44px !important;
+}
+
+/* Improve color contrast for better accessibility */
+.title,
+.product-name {
+  color: #1a1a1a !important;
+}
+
+.price {
+  color: #333 !important;
+}
+
+.rating-text {
+  color: #555 !important;
+}
+
+.close-btn {
+  color: #333 !important;
+}
+
+.arrow {
+  color: #666 !important;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }

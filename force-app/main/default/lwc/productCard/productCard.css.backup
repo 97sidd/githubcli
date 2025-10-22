@@ -1,200 +1,343 @@
 .product-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: relative;
-    max-width: 300px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-width: 300px;
 }
 
 .image-container {
-    position: relative;
-    cursor: pointer;
-    margin-bottom: 12px;
-    /* ADA Issue: No focus indicator for clickable image container */
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 12px;
+  /* ADA Issue: No focus indicator for clickable image container */
 }
 
 .product-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .stock-indicator {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    /* ADA Issue: Information conveyed by color only */
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  /* ADA Issue: Information conveyed by color only */
 }
 
 .product-info {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .product-name {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    /* ADA Issue: Should be a proper heading element */
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  /* ADA Issue: Should be a proper heading element */
 }
 
 .price {
-    font-size: 20px;
-    font-weight: bold;
-    /* ADA Issue: Poor color contrast */
-    color: #888;
-    margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  /* ADA Issue: Poor color contrast */
+  color: #888;
+  margin-bottom: 8px;
 }
 
 .rating-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
 .star {
-    /* ADA Issue: Poor color contrast and no focus indicator */
-    color: #ffd700;
-    font-size: 16px;
-    cursor: pointer;
-    margin-right: 2px;
+  /* ADA Issue: Poor color contrast and no focus indicator */
+  color: #ffd700;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 2px;
 }
 
 .star:hover {
-    /* ADA Issue: Only visual hover feedback */
-    transform: scale(1.1);
+  /* ADA Issue: Only visual hover feedback */
+  transform: scale(1.1);
 }
 
 .rating-text {
-    margin-left: 8px;
-    font-size: 14px;
-    /* ADA Issue: Low contrast text */
-    color: #999;
+  margin-left: 8px;
+  font-size: 14px;
+  /* ADA Issue: Low contrast text */
+  color: #999;
 }
 
 .description-toggle {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 8px;
-    padding: 4px;
-    /* ADA Issue: No focus indicator */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 8px;
+  padding: 4px;
+  /* ADA Issue: No focus indicator */
 }
 
 .description-toggle:hover {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .arrow {
-    margin-left: 8px;
-    font-size: 12px;
-    /* ADA Issue: Color and size make it hard to see */
-    color: #ccc;
+  margin-left: 8px;
+  font-size: 12px;
+  /* ADA Issue: Color and size make it hard to see */
+  color: #ccc;
 }
 
 .product-description {
-    padding: 8px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    margin-bottom: 12px;
-    font-size: 14px;
-    line-height: 1.4;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .purchase-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
 .quantity-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .quantity-container span {
-    font-size: 14px;
-    font-weight: 500;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .quantity-container input {
-    width: 60px;
-    padding: 4px 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    text-align: center;
-    /* ADA Issue: No focus indicator */
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  /* ADA Issue: No focus indicator */
 }
 
 .add-to-cart-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    /* ADA Issue: No focus indicator and touch target too small */
-    min-height: 32px;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  /* ADA Issue: No focus indicator and touch target too small */
+  min-height: 32px;
 }
 
 .add-to-cart-btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .add-to-cart-btn[data-disabled="false"] {
-    background-color: #6c757d;
-    cursor: not-allowed;
-    /* ADA Issue: Disabled state not properly communicated */
+  background-color: #6c757d;
+  cursor: not-allowed;
+  /* ADA Issue: Disabled state not properly communicated */
 }
 
 .notification {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 8px 12px;
-    border-radius: 4px;
-    border: 1px solid #c3e6cb;
-    font-size: 14px;
-    margin-top: 8px;
-    /* ADA Issue: Not in a live region for screen readers */
+  background-color: #d4edda;
+  color: #155724;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #c3e6cb;
+  font-size: 14px;
+  margin-top: 8px;
+  /* ADA Issue: Not in a live region for screen readers */
 }
 
 .card-actions {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    display: flex;
-    gap: 4px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
 }
 
 .action-btn {
-    width: 32px;
-    height: 32px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 14px;
-    /* ADA Issue: No focus indicator and poor contrast */
-    color: #666;
-    border: 1px solid #ddd;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  /* ADA Issue: No focus indicator and poor contrast */
+  color: #666;
+  border: 1px solid #ddd;
 }
 
 .action-btn:hover {
-    background: white;
-    /* ADA Issue: Only visual feedback on hover */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+  /* ADA Issue: Only visual feedback on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* ADA Issue: Missing high contrast mode support */
 /* ADA Issue: Missing reduced motion support */
 /* ADA Issue: Missing proper focus indicators throughout */
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+
+/* Focus indicators for all interactive elements */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus,
+[role="button"]:focus,
+[tabindex]:focus {
+  outline: 2px solid #0070d2 !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 0 3px #0070d2 !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: ButtonText !important;
+  }
+
+  .custom-button,
+  .add-to-cart-btn,
+  .submit-btn {
+    border: 2px solid ButtonText !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Ensure minimum touch target sizes */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+.custom-button,
+.add-to-cart-btn,
+.submit-btn,
+.action-btn {
+  min-height: 44px !important;
+  min-width: 44px !important;
+}
+
+/* Improve color contrast for better accessibility */
+.title,
+.product-name {
+  color: #1a1a1a !important;
+}
+
+.price {
+  color: #333 !important;
+}
+
+.rating-text {
+  color: #555 !important;
+}
+
+.close-btn {
+  color: #333 !important;
+}
+
+.arrow {
+  color: #666 !important;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ===== NEW ADA ISSUES ADDED ===== */
+
+/* NEW ADA Issue: Poor color contrast on new badge */
+.new-badge {
+  position: absolute;
+  top: 12px;
+  left: 8px;
+  background-color: #ffff99; /* Poor contrast with white text */
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* NEW ADA Issue: Discount badge relies only on color */
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  right: 40px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  /* No text indicators, only color-based */
+}
+
+/* NEW ADA Issue: Price display without proper contrast */
+.price-display {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ccc; /* Very poor contrast */
+  margin-bottom: 8px;
+}
+
+/* NEW ADA Issue: Missing focus indicators for new elements */
+.new-badge:focus,
+.discount-badge:focus {
+  outline: none; /* Bad practice - removes focus indicators */
+}
+
+/* NEW ADA Issue: Animation without reduced motion support */
+.new-badge {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}

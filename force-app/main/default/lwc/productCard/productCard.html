@@ -1,9 +1,9 @@
 <template>
   <div class="product-card">
     <!-- NEW ADA Issue: Missing main landmark -->
-    
+
     <!-- NEW ADA Issue: No skip navigation link -->
-    
+
     <!-- ADA Issue: Image without proper alt text and click handler not keyboard accessible -->
     <div
       class="image-container"
@@ -11,18 +11,16 @@
       role="button"
       tabindex="0"
     >
-      <img
-        src={product.image}
-        class="product-image"
-        alt=""
-      />
-      
+      <img src={product.image} class="product-image" alt="" />
+
       <!-- NEW ADA Issue: Decorative badge without proper hiding -->
       <div class="new-badge">NEW!</div>
-      
+
       <!-- NEW ADA Issue: Discount indicator missing screen reader text -->
-      <div class="discount-badge" style="background-color: red; color: white;">50% OFF</div>
-      
+      <div class="discount-badge" style="background-color: red; color: white">
+        50% OFF
+      </div>
+
       <!-- ADA Issue: Stock indicator using color only -->
       <div
         class="stock-indicator in-stock"
@@ -79,7 +77,7 @@
 
       <div class="purchase-section">
         <!-- NEW ADA Issue: Form section without proper landmark -->
-        
+
         <!-- ADA Issue: Form controls without proper labels -->
         <div class="quantity-container">
           <span>Qty:</span>
@@ -94,9 +92,9 @@
 
         <!-- NEW ADA Issue: Price without currency information for screen readers -->
         <div class="price-display">${product.price}</div>
-        
+
         <!-- NEW ADA Issue: Savings amount without context -->
-        <div style="color: green; font-weight: bold;">Save $20!</div>
+        <div style="color: green; font-weight: bold">Save $20!</div>
 
         <!-- ADA Issue: Button state not communicated (disabled when out of stock) -->
         <div
@@ -106,7 +104,7 @@
         >
           Add to Cart
         </div>
-        
+
         <!-- NEW ADA Issue: Compare checkbox without label -->
         <input type="checkbox" id="compare-{product.id}" />
         <span>Add to compare</span>
@@ -114,7 +112,13 @@
 
       <!-- ADA Issue: Status message not in live region -->
       <template if:true={showNotification}>
-        <div class="notification" role="status" aria-live="polite">
+        <div
+          class="notification"
+          role="status"
+          aria-live="polite"
+          role="status"
+          aria-live="polite"
+        >
           Item added to cart successfully!
         </div>
       </template>
