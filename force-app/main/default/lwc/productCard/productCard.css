@@ -289,3 +289,55 @@ textarea,
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+/* ===== NEW ADA ISSUES ADDED ===== */
+
+/* NEW ADA Issue: Poor color contrast on new badge */
+.new-badge {
+  position: absolute;
+  top: 12px;
+  left: 8px;
+  background-color: #ffff99; /* Poor contrast with white text */
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* NEW ADA Issue: Discount badge relies only on color */
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  right: 40px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  /* No text indicators, only color-based */
+}
+
+/* NEW ADA Issue: Price display without proper contrast */
+.price-display {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ccc; /* Very poor contrast */
+  margin-bottom: 8px;
+}
+
+/* NEW ADA Issue: Missing focus indicators for new elements */
+.new-badge:focus,
+.discount-badge:focus {
+  outline: none; /* Bad practice - removes focus indicators */
+}
+
+/* NEW ADA Issue: Animation without reduced motion support */
+.new-badge {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
