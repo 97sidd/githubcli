@@ -22,12 +22,11 @@ apply_html_ada_fixes() {
     # Create backup
     cp "$file" "$file.backup"
     
-    # 1. Add role and tabindex to clickable divs
-    sed -i 's/<div\([^>]*\)onclick=\([^>]*\)>/<div\1onclick=\2 role="button" tabindex="0" onkeydown="if(event.key==='"'"'Enter'"'"'||event.key==='"'"' '"'"'){this.click()}">/g' "$file"
+    # 1. Add role and tabindex to clickable divs (avoiding onclick conflicts)
+    sed -i 's/<div\([^>]*\)onclick=\([^>]*\)\([^>]*\)>/<div\1onclick=\2\3 role="button" tabindex="0">/g' "$file"
     
     # 2. Add alt text to images without it
-    sed -i 's/<img\([^>]*\)src=\([^>]*\)>/<img\1src=\2 alt="Descriptive image text">/g' "$file"
-    sed -i 's/<img\([^>]*\)src=\([^>]*\)alt=""/<img\1src=\2 alt="Descriptive image text"/g' "$file"
+    sed -i 's/<img\([^>]*\)src=\([^>]*\)\([^>]*\)>/<img\1src=\2\3 alt="Descriptive image text">/g' "$file"
     
     # 3. Add ARIA attributes to form inputs
     sed -i 's/<input\([^>]*\)type="text"\([^>]*\)>/<input\1type="text"\2 aria-required="true" aria-label="Text input field">/g' "$file"
@@ -37,13 +36,9 @@ apply_html_ada_fixes() {
     # 4. Add proper button roles
     sed -i 's/<button\([^>]*\)>/<button\1 type="button" aria-label="Button">/g' "$file"
     
-    # 5. Add ARIA live regions for dynamic content
-    if ! grep -q "aria-live" "$file"; then
-        sed -i 's/<template if:true={\([^}]*\)}>/<div aria-live="polite" aria-atomic="true"><template if:true={\1}>/g' "$file"
-    fi
-    
-    # 6. Fix heading hierarchy
-    sed -i 's/<div class="\([^"]*title[^"]*\)"/<h2 class="\1"/g' "$file"
+    # 5. Add ARIA live regions around error messages (more targeted)
+    sed -i 's/<div class="error"/<div class="error" role="alert" aria-live="assertive"/g' "$file"
+    sed -i 's/<div class="notification"/<div class="notification" role="status" aria-live="polite"/g' "$file"
     
     echo "✅ HTML accessibility fixes applied to: $file"
 }
