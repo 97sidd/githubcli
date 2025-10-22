@@ -1,83 +1,130 @@
 <template>
-    <div class="product-card">
-        <!-- ADA Issue: No skip link for keyboard users -->
-        
-        <!-- ADA Issue: Image without proper alt text and click handler not keyboard accessible -->
-        <div class="image-container" onclick={handleImageClick}>
-            <img src={product.image} class="product-image">
-            <!-- ADA Issue: Stock indicator using color only -->
-            <div class="stock-indicator in-stock" lwc:if={product.inStock} style="background-color: green;"></div>
-            <div class="stock-indicator out-of-stock" lwc:else style="background-color: red;"></div>
-        </div>
+  <div class="product-card">
+    <!-- ADA Issue: No skip link for keyboard users -->
 
-        <div class="product-info">
-            <!-- ADA Issue: Product name not using proper heading hierarchy -->
-            <div class="product-name">{product.name}</div>
-            
-            <!-- ADA Issue: Price without proper labeling for screen readers -->
-            <div class="price">{formattedPrice}</div>
-
-            <!-- ADA Issue: Star rating without proper ARIA attributes -->
-            <div class="rating-container">
-                <template for:each={stars} for:item="star">
-                    <span key={star.id} 
-                          class="star" 
-                          data-rating={star.value}
-                          onclick={handleRatingClick}>
-                        ★
-                    </span>
-                </template>
-                <!-- ADA Issue: Rating value not accessible to screen readers -->
-                <span class="rating-text">({product.rating})</span>
-            </div>
-
-            <!-- ADA Issue: Expandable content without proper ARIA attributes -->
-            <div class="description-toggle" onclick={toggleDetails}>
-                <span>Details</span>
-                <!-- ADA Issue: Expand/collapse indicator not accessible -->
-                <span class="arrow" lwc:if={isExpanded}>▼</span>
-                <span class="arrow" lwc:else>▶</span>
-            </div>
-
-            <!-- ADA Issue: Conditionally shown content without proper announcements -->
-            <template if:true={isExpanded}>
-                <div class="product-description">
-                    {product.description}
-                </div>
-            </template>
-
-            <div class="purchase-section">
-                <!-- ADA Issue: Form controls without proper labels -->
-                <div class="quantity-container">
-                    <span>Qty:</span>
-                    <input type="number" 
-                           value={quantity} 
-                           min="1" 
-                           max="10"
-                           onchange={handleQuantityChange}>
-                </div>
-
-                <!-- ADA Issue: Button state not communicated (disabled when out of stock) -->
-                <div class="add-to-cart-btn" 
-                     onclick={handleAddToCart}
-                     data-disabled={product.inStock}>
-                    Add to Cart
-                </div>
-            </div>
-
-            <!-- ADA Issue: Status message not in live region -->
-            <template if:true={showNotification}>
-                <div class="notification">
-                    Item added to cart successfully!
-                </div>
-            </template>
-        </div>
-
-        <!-- ADA Issue: Interactive elements without keyboard focus management -->
-        <div class="card-actions">
-            <div class="action-btn wishlist" onclick={handleWishlist}>♡</div>
-            <div class="action-btn share" onclick={handleShare}>📤</div>
-            <div class="action-btn compare" onclick={handleCompare}>⚖</div>
-        </div>
+    <!-- ADA Issue: Image without proper alt text and click handler not keyboard accessible -->
+    <div
+      class="image-container"
+      onclick={handleImageClick}
+      role="button"
+      tabindex="0"
+    >
+      <img
+        src={product.image}
+        class="product-image"
+        alt="Descriptive image text"
+      />
+      <!-- ADA Issue: Stock indicator using color only -->
+      <div
+        class="stock-indicator in-stock"
+        lwc:if={product.inStock}
+        style="background-color: green"
+      ></div>
+      <div
+        class="stock-indicator out-of-stock"
+        lwc:else
+        style="background-color: red"
+      ></div>
     </div>
+
+    <div class="product-info">
+      <!-- ADA Issue: Product name not using proper heading hierarchy -->
+      <div class="product-name">{product.name}</div>
+
+      <!-- ADA Issue: Price without proper labeling for screen readers -->
+      <div class="price">{formattedPrice}</div>
+
+      <!-- ADA Issue: Star rating without proper ARIA attributes -->
+      <div class="rating-container">
+        <template for:each={stars} for:item="star">
+          <span
+            key={star.id}
+            class="star"
+            data-rating={star.value}
+            onclick={handleRatingClick}
+          >
+            ★
+          </span>
+        </template>
+        <!-- ADA Issue: Rating value not accessible to screen readers -->
+        <span class="rating-text">({product.rating})</span>
+      </div>
+
+      <!-- ADA Issue: Expandable content without proper ARIA attributes -->
+      <div
+        class="description-toggle"
+        onclick={toggleDetails}
+        role="button"
+        tabindex="0"
+      >
+        <span>Details</span>
+        <!-- ADA Issue: Expand/collapse indicator not accessible -->
+        <span class="arrow" lwc:if={isExpanded}>▼</span>
+        <span class="arrow" lwc:else>▶</span>
+      </div>
+
+      <!-- ADA Issue: Conditionally shown content without proper announcements -->
+      <template if:true={isExpanded}>
+        <div class="product-description">{product.description}</div>
+      </template>
+
+      <div class="purchase-section">
+        <!-- ADA Issue: Form controls without proper labels -->
+        <div class="quantity-container">
+          <span>Qty:</span>
+          <input
+            type="number"
+            value={quantity}
+            min="1"
+            max="10"
+            onchange={handleQuantityChange}
+          />
+        </div>
+
+        <!-- ADA Issue: Button state not communicated (disabled when out of stock) -->
+        <div
+          class="add-to-cart-btn"
+          onclick={handleAddToCart}
+          data-disabled={product.inStock}
+        >
+          Add to Cart
+        </div>
+      </div>
+
+      <!-- ADA Issue: Status message not in live region -->
+      <template if:true={showNotification}>
+        <div class="notification" role="status" aria-live="polite">
+          Item added to cart successfully!
+        </div>
+      </template>
+    </div>
+
+    <!-- ADA Issue: Interactive elements without keyboard focus management -->
+    <div class="card-actions">
+      <div
+        class="action-btn wishlist"
+        onclick={handleWishlist}
+        role="button"
+        tabindex="0"
+      >
+        ♡
+      </div>
+      <div
+        class="action-btn share"
+        onclick={handleShare}
+        role="button"
+        tabindex="0"
+      >
+        📤
+      </div>
+      <div
+        class="action-btn compare"
+        onclick={handleCompare}
+        role="button"
+        tabindex="0"
+      >
+        ⚖
+      </div>
+    </div>
+  </div>
 </template>
