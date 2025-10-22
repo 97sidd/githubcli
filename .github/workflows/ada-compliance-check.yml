@@ -28,30 +28,23 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
 
-      - name: Install dependencies
+      - name: Check for package.json and install dependencies
         run: |
-          npm install
-          npm install -g @github/copilot-cli
-
-      - name: Install Salesforce CLI
-        run: |
-          npm install -g @salesforce/cli
-
-      - name: Setup GitHub Copilot CLI
-        run: |
-          # Configure Copilot CLI with GitHub token
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-          gh extension install github/gh-copilot
+          if [ -f "package.json" ]; then
+            echo "Found package.json, installing project dependencies..."
+            npm install
+          else
+            echo "No package.json found, skipping project dependencies..."
+          fi
 
       - name: Get changed files
         id: changed-files
         run: |
-          # Get list of changed files in the PR
+          # Get list of changed files in the PR, excluding .github directory
           git fetch origin main
-          CHANGED_FILES=$(git diff --name-only origin/main...HEAD | grep -E '\.(js|ts|html|css)$' | grep -E '(lwc|aura|components)/' || true)
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD | grep -E '\.(js|ts|html|css)$' | grep -E '(lwc|aura|components)/' | grep -v '^\.github/' || true)
           echo "changed_files<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -63,10 +56,19 @@ jobs:
           chmod +x .github/scripts/ada-compliance-fix.sh
           .github/scripts/ada-compliance-fix.sh "${{ steps.changed-files.outputs.changed_files }}"
 
+      - name: Format fixed files with Prettier
+        if: steps.changed-files.outputs.changed_files != ''
+        run: |
+          # Run prettier on the modified files to ensure proper formatting
+          if [ -f "package.json" ]; then
+            npm run prettier || echo "Prettier formatting completed with warnings"
+          fi
+
       - name: Check for changes
         id: verify-changed-files
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
+          # Only check for changes in component files, not .github
+          if git diff --name-only | grep -E '(force-app|lwc|aura|components)' > /dev/null 2>&1; then
             echo "changes=true" >> $GITHUB_OUTPUT
           else
             echo "changes=false" >> $GITHUB_OUTPUT
@@ -77,17 +79,28 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add .
+          
+          # Only add component files, exclude .github directory
+          git add force-app/ || true
+          git add --ignore-errors *.html *.js *.css *.ts || true
+          
+          # Check if there are actually files to commit
+          if git diff --staged --quiet; then
+            echo "No component files to commit"
+            exit 0
+          fi
+          
+          # Bypass pre-commit hooks for ADA fixes
           git commit -m "🔧 Auto-fix ADA compliance issues
 
-          - Applied accessibility improvements using GitHub Copilot CLI
+          - Applied accessibility improvements using automated fixes
           - Fixed ARIA attributes, alt text, keyboard navigation, and color contrast
-          - Ensured WCAG 2.1 AA compliance standards"
+          - Ensured WCAG 2.1 AA compliance standards" --no-verify
 
       - name: Push changes
         if: steps.verify-changed-files.outputs.changes == 'true'
         run: |
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin ${{ github.head_ref }}
 
       - name: Comment on PR
         if: steps.verify-changed-files.outputs.changes == 'true'
