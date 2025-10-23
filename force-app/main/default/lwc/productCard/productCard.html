@@ -1,40 +1,101 @@
 <template>
   <!-- NEW ADA Issue: Missing document language attribute -->
   <div class="product-card">
-    <!-- NEW ADA Issue: Missing skip to content link -->
-    
-    <!-- NEW ADA Issue: Missing main landmark and heading structure -->
-    <section>
-      <!-- NEW ADA Issue: Image without alt text and missing keyboard support -->
-      <div onclick={handleImageClick} class="image-container">
-        <img src={product.image} class="product-image" />
-        
-        <!-- NEW ADA Issue: Information conveyed by color only -->
-        <span class="availability-dot" style="background-color: green;"></span>
-        
-        <!-- NEW ADA Issue: Decorative content not hidden from screen readers -->
-        <div class="badge-new">🔥 HOT!</div>
-        
-        <!-- NEW ADA Issue: Time-sensitive content without user control -->
-        <div class="flash-sale" style="animation: blink 1s infinite;">Limited Time!</div>
+    <!-- NEW ADA Issue: Missing main landmark -->
+
+    <!-- NEW ADA Issue: No skip navigation link -->
+
+    <!-- ADA Issue: Image without proper alt text and click handler not keyboard accessible -->
+    <div
+      class="image-container"
+      onclick={handleImageClick}
+      role="button"
+      tabindex="0"
+    >
+      <img src={product.image} class="product-image" alt="" />
+
+      <!-- NEW ADA Issue: Decorative badge without proper hiding -->
+      <div class="new-badge">NEW!</div>
+
+      <!-- NEW ADA Issue: Discount indicator missing screen reader text -->
+      <div class="discount-badge" style="background-color: red; color: white">
+        50% OFF
       </div>
 
-      <div class="product-info">
-        <!-- NEW ADA Issue: Heading hierarchy skipped (missing h1, h2) -->
-        <h4 class="product-title">{product.name}</h4>
-        
-        <!-- NEW ADA Issue: Price without currency identification -->
-        <span class="price">{formattedPrice}</span>
-        
-        <!-- NEW ADA Issue: Rating system without proper labels -->
-        <div class="rating-container">
-          <div onclick={handleRating} data-rating="1">⭐</div>
-          <div onclick={handleRating} data-rating="2">⭐</div>
-          <div onclick={handleRating} data-rating="3">⭐</div>
-          <div onclick={handleRating} data-rating="4">⭐</div>
-          <div onclick={handleRating} data-rating="5">⭐</div>
-          <span>({product.rating})</span>
+      <!-- ADA Issue: Stock indicator using color only -->
+      <div
+        class="stock-indicator in-stock"
+        lwc:if={product.inStock}
+        style="background-color: green"
+      ></div>
+      <div
+        class="stock-indicator out-of-stock"
+        lwc:else
+        style="background-color: red"
+      ></div>
+    </div>
+
+    <div class="product-info">
+      <!-- ADA Issue: Product name not using proper heading hierarchy -->
+      <div class="product-name">{product.name}</div>
+
+      <!-- ADA Issue: Price without proper labeling for screen readers -->
+      <div class="price">{formattedPrice}</div>
+
+      <!-- ADA Issue: Star rating without proper ARIA attributes -->
+      <div class="rating-container">
+        <template for:each={stars} for:item="star">
+          <span
+            key={star.id}
+            class="star"
+            data-rating={star.value}
+            onclick={handleRatingClick}
+          >
+            ★
+          </span>
+        </template>
+        <!-- ADA Issue: Rating value not accessible to screen readers -->
+        <span class="rating-text">({product.rating})</span>
+      </div>
+
+      <!-- ADA Issue: Expandable content without proper ARIA attributes -->
+      <div
+        class="description-toggle"
+        onclick={toggleDetails}
+        role="button"
+        tabindex="0"
+      >
+        <span>Details</span>
+        <!-- ADA Issue: Expand/collapse indicator not accessible -->
+        <span class="arrow" lwc:if={isExpanded}>▼</span>
+        <span class="arrow" lwc:else>▶</span>
+      </div>
+
+      <!-- ADA Issue: Conditionally shown content without proper announcements -->
+      <template if:true={isExpanded}>
+        <div class="product-description">{product.description}</div>
+      </template>
+
+      <div class="purchase-section">
+        <!-- NEW ADA Issue: Form section without proper landmark -->
+
+        <!-- ADA Issue: Form controls without proper labels -->
+        <div class="quantity-container">
+          <span>Qty:</span>
+          <input
+            type="number"
+            value={quantity}
+            min="1"
+            max="10"
+            onchange={handleQuantityChange}
+          />
         </div>
+
+        <!-- NEW ADA Issue: Price without currency information for screen readers -->
+        <div class="price-display">${product.price}</div>
+
+        <!-- NEW ADA Issue: Savings amount without context -->
+        <div style="color: green; font-weight: bold">Save $20!</div>
 
         <!-- NEW ADA Issue: Interactive content without proper controls -->
         <div onclick={toggleDetails} class="details-toggle">
@@ -42,26 +103,21 @@
           <span class="arrow">→</span>
         </div>
 
-        <!-- NEW ADA Issue: Hidden content appears without announcement -->
-        <template if:true={isExpanded}>
-          <div class="product-description">{product.description}</div>
-        </template>
+        <!-- NEW ADA Issue: Compare checkbox without label -->
+        <input type="checkbox" id="compare-{product.id}" />
+        <span>Add to compare</span>
+      </div>
 
-        <!-- NEW ADA Issue: Form without proper fieldset and legend -->
-        <div class="purchase-form">
-          <!-- NEW ADA Issue: Input without label -->
-          <input type="number" value={quantity} onchange={handleQuantityChange} placeholder="Qty" />
-          
-          <!-- NEW ADA Issue: Required field not indicated -->
-          <input type="email" placeholder="Email for updates" />
-          
-          <!-- NEW ADA Issue: Button without descriptive text -->
-          <button onclick={handleAddToCart} style="background: #28a745; color: white; border: none;">
-            🛒
-          </button>
-          
-          <!-- NEW ADA Issue: Link without descriptive text -->
-          <a href="/compare" style="color: blue;">Click here</a>
+      <!-- ADA Issue: Status message not in live region -->
+      <template if:true={showNotification}>
+        <div
+          class="notification"
+          role="status"
+          aria-live="polite"
+          role="status"
+          aria-live="polite"
+        >
+          Item added to cart successfully!
         </div>
 
         <!-- NEW ADA Issue: Status message not in live region -->
