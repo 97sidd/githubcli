@@ -26,8 +26,22 @@ export default class ProductCard extends LightningElement {
     }, 3000);
   }
 
+  // NEW ADA Issue: Missing keyboard navigation for quantity change
   handleQuantityChange(event) {
     this.quantity = event.target.value;
+    // ADA Issue: No validation feedback for screen readers
+  }
+
+  // NEW ADA Issue: No error handling with accessibility announcements
+  handlePriceError() {
+    this.priceError = "Price unavailable";
+    // Missing: screen reader announcement
+  }
+
+  // NEW ADA Issue: Image zoom without keyboard support
+  handleImageZoom() {
+    // Missing: keyboard event handling
+    console.log("Image zoomed");
   }
 
   toggleDetails() {

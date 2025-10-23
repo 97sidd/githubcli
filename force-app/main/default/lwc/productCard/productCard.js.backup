@@ -1,77 +1,109 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track } from "lwc";
 
 export default class ProductCard extends LightningElement {
-    @api product = {
-        id: '1',
-        name: 'Sample Product',
-        price: 99.99,
-        rating: 4.5,
-        image: '/resource/productImage',
-        inStock: true,
-        description: 'This is a sample product description.'
-    };
+  @api product = {
+    id: "1",
+    name: "Sample Product",
+    price: 99.99,
+    rating: 4.5,
+    image: "/resource/productImage",
+    inStock: true,
+    description: "This is a sample product description."
+  };
 
-    @track quantity = 1;
-    @track isExpanded = false;
-    @track showNotification = false;
+  @track quantity = 1;
+  @track isExpanded = false;
+  @track showNotification = false;
 
-    handleAddToCart() {
-        // ADA Issue: No screen reader announcement for cart addition
-        console.log('Added to cart');
-        this.showNotification = true;
-        
-        // ADA Issue: Notification disappears automatically without user control
-        setTimeout(() => {
-            this.showNotification = false;
-        }, 3000);
+  handleAddToCart() {
+    // ADA Issue: No screen reader announcement for cart addition
+    console.log("Added to cart");
+    this.showNotification = true;
+
+    // ADA Issue: Notification disappears automatically without user control
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 3000);
+  }
+
+  // NEW ADA Issue: Missing keyboard navigation for quantity change
+  handleQuantityChange(event) {
+    this.quantity = event.target.value;
+    // ADA Issue: No validation feedback for screen readers
+  }
+  
+  // NEW ADA Issue: No error handling with accessibility announcements
+  handlePriceError() {
+    this.priceError = "Price unavailable";
+    // Missing: screen reader announcement
+  }
+
+  // NEW ADA Issue: Image zoom without keyboard support
+  handleImageZoom() {
+    // Missing: keyboard event handling
+    console.log("Image zoomed");
+  }
+
+  toggleDetails() {
+    // ADA Issue: State change not announced to screen readers
+    this.isExpanded = !this.isExpanded;
+  }
+
+  handleImageClick() {
+    // ADA Issue: Image click handler without keyboard equivalent
+    console.log("Image clicked - should open gallery");
+  }
+
+  handleRatingClick(event) {
+    // ADA Issue: Star rating clickable but not keyboard accessible
+    const rating = event.target.dataset.rating;
+    console.log("Rating clicked:", rating);
+  }
+
+  get stockStatus() {
+    return this.product.inStock ? "In Stock" : "Out of Stock";
+  }
+
+  get formattedPrice() {
+    return `$${this.product.price.toFixed(2)}`;
+  }
+
+  get stars() {
+    // Generate array for star rating display
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push({ id: i, value: i });
     }
+    return stars;
+  }
 
-    handleQuantityChange(event) {
-        this.quantity = event.target.value;
-    }
+  handleWishlist() {
+    console.log("Added to wishlist");
+  }
 
-    toggleDetails() {
-        // ADA Issue: State change not announced to screen readers
-        this.isExpanded = !this.isExpanded;
-    }
+  handleShare() {
+    console.log("Share product");
+  }
 
-    handleImageClick() {
-        // ADA Issue: Image click handler without keyboard equivalent
-        console.log('Image clicked - should open gallery');
-    }
+  handleCompare() {
+    console.log("Add to compare");
+  }
 
-    handleRatingClick(event) {
-        // ADA Issue: Star rating clickable but not keyboard accessible
-        const rating = event.target.dataset.rating;
-        console.log('Rating clicked:', rating);
+  // Accessibility: Keyboard navigation support
+  handleKeyDown(event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      if (typeof this.handleClick === "function") {
+        this.handleClick(event);
+      }
     }
+  }
 
-    get stockStatus() {
-        return this.product.inStock ? 'In Stock' : 'Out of Stock';
+  // Accessibility: Announce changes to screen readers
+  announceToScreenReader(message) {
+    const liveRegion = this.template.querySelector("[aria-live]");
+    if (liveRegion) {
+      liveRegion.textContent = message;
     }
-
-    get formattedPrice() {
-        return `$${this.product.price.toFixed(2)}`;
-    }
-
-    get stars() {
-        // Generate array for star rating display
-        const stars = [];
-        for (let i = 1; i <= 5; i++) {
-            stars.push({ id: i, value: i });
-        }
-        return stars;
-    }
-
-    handleWishlist() {
-        console.log('Added to wishlist');
-    }
-
-    handleShare() {
-        console.log('Share product');
-    }
-
-    handleCompare() {
-        console.log('Add to compare');
-    }
+  }
 }
