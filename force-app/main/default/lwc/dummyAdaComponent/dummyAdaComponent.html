@@ -1,63 +1,63 @@
 <template>
-    <div class="container">
-        <!-- ADA Issue: Missing proper heading hierarchy -->
-        <div class="title">User Registration Form</div>
-        
-        <!-- ADA Issue: Image without alt text -->
-        <img src="/resource/userIcon" class="user-icon">
-        
-        <!-- ADA Issue: Button without proper ARIA attributes or keyboard support -->
-        <div class="custom-button" onclick={handleClick}>
-            Open Registration Modal
-        </div>
+  <div class="container">
+    <!-- ADA Issue: Missing proper heading hierarchy -->
+    <div class="title">User Registration Form</div>
 
-        <!-- ADA Issue: Color-only indication for required fields -->
-        <div class="required-info" style="color: red;">* Required fields</div>
+    <!-- ADA Issue: Image without alt text -->
+    <img src="/resource/userIcon" class="user-icon" />
 
-        <template if:true={showModal}>
-            <!-- ADA Issue: Modal without proper ARIA attributes -->
-            <div class="modal-backdrop">
-                <div class="modal">
-                    <!-- ADA Issue: Missing close button accessibility -->
-                    <span class="close-btn" onclick={closeModal}>×</span>
-                    
-                    <div class="modal-title">Registration Form</div>
-                    
-                    <!-- ADA Issue: Form inputs without proper labels -->
-                    <div class="form-group">
-                        <input 
-                            type="text" 
-                            name="userName" 
-                            placeholder="Enter your name"
-                            value={userName}
-                            onchange={handleInputChange}
-                        >
-                    </div>
-                    
-                    <div class="form-group">
-                        <input 
-                            type="email" 
-                            name="email" 
-                            placeholder="Enter your email"
-                            value={email}
-                            onchange={handleInputChange}
-                        >
-                    </div>
-
-                    <!-- ADA Issue: Error message not associated with form -->
-                    <template if:true={errorMessage}>
-                        <div class="error" style="color: red;">{errorMessage}</div>
-                    </template>
-
-                    <!-- ADA Issue: Submit button without proper accessibility -->
-                    <div class="submit-btn" onclick={handleSubmit}>
-                        Submit Registration
-                    </div>
-                </div>
-            </div>
-        </template>
-
-        <!-- ADA Issue: Link without descriptive text -->
-        <a href="/terms" target="_blank">Click here</a>
+    <!-- ADA Issue: Button without proper ARIA attributes or keyboard support -->
+    <div class="custom-button" onclick={handleClick}>
+      Open Registration Modal
     </div>
+
+    <!-- ADA Issue: Color-only indication for required fields -->
+    <div class="required-info" style="color: red">* Required fields</div>
+
+    <template if:true={showModal}>
+      <!-- ADA Issue: Modal without proper ARIA attributes -->
+      <div class="modal-backdrop">
+        <div class="modal">
+          <!-- ADA Issue: Missing close button accessibility -->
+          <span class="close-btn" onclick={closeModal}>×</span>
+
+          <div class="modal-title">Registration Form</div>
+
+          <!-- ADA Issue: Form inputs without proper labels -->
+          <div class="form-group">
+            <input
+              type="text"
+              name="userName"
+              placeholder="Enter your name"
+              value={userName}
+              onchange={handleInputChange}
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onchange={handleInputChange}
+            />
+          </div>
+
+          <!-- ADA Issue: Error message not associated with form -->
+          <template if:true={errorMessage}>
+            <div class="error" style="color: red">{errorMessage}</div>
+          </template>
+
+          <!-- ADA Issue: Submit button without proper accessibility -->
+          <div class="submit-btn" onclick={handleSubmit}>
+            Submit Registration
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- ADA Issue: Link without descriptive text -->
+    <a href="/terms" target="_blank">Click here</a>
+  </div>
 </template>

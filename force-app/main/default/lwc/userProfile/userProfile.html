@@ -5,7 +5,7 @@
     
     <!-- ADA Issue: Image without alt text -->
     <div class="profile-header">
-      <img src={user.profilePicture} class="profile-image" />
+      <img src={user.profilePicture} class="profile-image" / alt="Image description needed">
       
       <!-- ADA Issue: Status indicator using color only -->
       <span class="status-indicator" style="background-color: green;"></span>
@@ -25,10 +25,10 @@
     <!-- ADA Issue: Form without proper structure -->
     <div class="profile-form">
       <!-- ADA Issue: Input without label -->
-      <input type="text" placeholder="Enter your name" value={user.name} onchange={handleNameChange} />
+      <input type="text" placeholder="Enter your name" value={user.name} onchange={handleNameChange} / aria-required="true">
       
       <!-- ADA Issue: Required field not indicated -->
-      <input type="email" placeholder="Email address" value={user.email} />
+      <input type="email" placeholder="Email address" value={user.email} / aria-required="true">
       
       <!-- ADA Issue: Select without label -->
       <select onchange={handleDepartmentChange}>
@@ -39,11 +39,11 @@
       </select>
       
       <!-- ADA Issue: Checkbox without proper labeling -->
-      <input type="checkbox" id="notifications" />
+      <input type="checkbox" id="notifications" / aria-required="true">
       <span onclick={toggleNotifications}>Enable notifications</span>
       
       <!-- ADA Issue: Button without descriptive text -->
-      <button onclick={handleSave} style="background: #28a745; color: white;">
+      <button onclick={handleSave} style="background: #28a745; color: white;" role="button" tabindex="0">
         💾
       </button>
     </div>
@@ -86,7 +86,7 @@
     </table>
 
     <!-- ADA Issue: Modal trigger without proper accessibility -->
-    <div onclick={openModal} class="view-details">
+    <div onclick={openModal} class="view-details" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){this.click()}">
       <span>View Full Profile</span>
       <span class="arrow">→</span>
     </div>
@@ -96,7 +96,7 @@
       <div class="modal-overlay">
         <div class="modal-content">
           <!-- ADA Issue: Close button without label -->
-          <button onclick={closeModal} class="close-btn">×</button>
+          <button onclick={closeModal} class="close-btn" role="button" tabindex="0">×</button>
           
           <div class="modal-body">
             <!-- ADA Issue: Content without proper structure -->

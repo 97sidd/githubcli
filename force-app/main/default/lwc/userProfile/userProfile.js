@@ -98,3 +98,10 @@ export default class UserProfile extends LightningElement {
         // ADA Issue: Event listeners not removed
     }
 }
+    // Accessibility: Keyboard navigation support
+    handleKeyDown(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this.handleClick(event);
+        }
+    }
