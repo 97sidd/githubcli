@@ -31,7 +31,7 @@ export default class ProductCard extends LightningElement {
     this.quantity = event.target.value;
     // ADA Issue: No validation feedback for screen readers
   }
-
+  
   // NEW ADA Issue: No error handling with accessibility announcements
   handlePriceError() {
     this.priceError = "Price unavailable";
