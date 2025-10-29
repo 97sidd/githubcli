@@ -1,15 +1,15 @@
 <template>
   <div class="user-profile-container" role="main">
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
     <div class="profile-header">
-<<<<<<< HEAD
       <img 
         src={user.profilePicture} 
         class="profile-image" 
         alt={user.imageAltText}
+        role="img"
       />
-=======
-      <img src={user.profilePicture} class="profile-image" / alt="Image description needed" alt="Descriptive image text" alt="Descriptive image text">
->>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       
       <span 
         class="status-indicator" 
@@ -22,173 +22,142 @@
       <h2 class="profile-title">{user.title}</h2>
     </div>
 
-<<<<<<< HEAD
     <div class="action-buttons" role="toolbar" aria-label="Profile actions">
       <button 
         class="edit-btn" 
         onclick={handleEdit}
         onkeydown={handleKeyDown}
+        role="button"
+        tabindex="0"
         aria-label="Edit profile"
       >
-        <span aria-hidden="true">✏️</span>
-        <span class="sr-only">Edit</span>
+        ✏️ Edit
       </button>
+      
       <button 
         class="delete-btn" 
         onclick={handleDelete}
         onkeydown={handleKeyDown}
+        role="button"
+        tabindex="0"
         aria-label="Delete profile"
       >
-        <span aria-hidden="true">🗑️</span>
-        <span class="sr-only">Delete</span>
+        🗑️ Delete
       </button>
+      
       <button 
         class="share-btn" 
         onclick={handleShare}
         onkeydown={handleKeyDown}
+        role="button"
+        tabindex="0"
         aria-label="Share profile"
       >
-        <span aria-hidden="true">📤</span>
-        <span class="sr-only">Share</span>
-=======
-    <!-- ADA Issue: Interactive elements without keyboard support -->
-    <div class="action-buttons">
-      <span onclick={handleEdit} class="edit-btn">✏️</span>
-      <span onclick={handleDelete} class="delete-btn">🗑️</span>
-      <span onclick={handleShare} class="share-btn">📤</span>
-    </div>
-
-    <!-- ADA Issue: Form without proper structure -->
-    <div class="profile-form">
-      <!-- ADA Issue: Input without label -->
-      <input type="text" placeholder="Enter your name" value={user.name} onchange={handleNameChange} / aria-required="true" aria-required="true" aria-label="Text input field" aria-required="true" aria-label="Text input field">
-      
-      <!-- ADA Issue: Required field not indicated -->
-      <input type="email" placeholder="Email address" value={user.email} / aria-required="true" aria-required="true" aria-label="Email input field" aria-required="true" aria-label="Email input field">
-      
-      <!-- ADA Issue: Select without label -->
-      <select onchange={handleDepartmentChange}>
-        <option value="">Choose department</option>
-        <option value="engineering">Engineering</option>
-        <option value="marketing">Marketing</option>
-        <option value="sales">Sales</option>
-      </select>
-      
-      <!-- ADA Issue: Checkbox without proper labeling -->
-      <input type="checkbox" id="notifications" / aria-required="true">
-      <span onclick={toggleNotifications}>Enable notifications</span>
-      
-      <!-- ADA Issue: Button without descriptive text -->
-      <button onclick={handleSave} style="background: #28a745; color: white;" role="button" tabindex="0" type="button" aria-label="Button" type="button" aria-label="Button">
-        💾
->>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
+        📤 Share
       </button>
     </div>
 
-    <form class="profile-form" aria-label="User profile form">
-      <div class="form-field">
-        <label for="name-input" class="form-label">
-          Name <span class="required-indicator" aria-label="required">*</span>
-        </label>
+    <form class="profile-form" role="form" aria-labelledby="form-heading">
+      <h3 id="form-heading">Profile Information</h3>
+      
+      <fieldset>
+        <legend>Personal Details</legend>
+        
+        <label for="name-input">Full Name *</label>
         <input 
           id="name-input"
           type="text" 
           value={user.name} 
           onchange={handleNameChange}
           aria-required="true"
-          aria-describedby="name-help"
+          aria-label="Full name input field"
           required
         />
-        <div id="name-help" class="field-help">Enter your full name</div>
-      </div>
-      
-      <div class="form-field">
-        <label for="email-input" class="form-label">
-          Email Address <span class="required-indicator" aria-label="required">*</span>
-        </label>
+        
+        <label for="email-input">Email Address *</label>
         <input 
           id="email-input"
           type="email" 
           value={user.email}
           onchange={handleEmailChange}
           aria-required="true"
-          aria-describedby="email-help"
+          aria-label="Email address input field"
           required
         />
-        <div id="email-help" class="field-help">Enter a valid email address</div>
-      </div>
-      
-      <div class="form-field">
-        <label for="department-select" class="form-label">Department</label>
+        
+        <label for="department-select">Department</label>
         <select 
           id="department-select"
           onchange={handleDepartmentChange}
-          aria-describedby="department-help"
+          aria-label="Select your department"
         >
           <option value="">Choose department</option>
           <option value="engineering">Engineering</option>
           <option value="marketing">Marketing</option>
           <option value="sales">Sales</option>
         </select>
-        <div id="department-help" class="field-help">Select your department</div>
-      </div>
-      
-      <div class="form-field checkbox-field">
-        <input 
-          type="checkbox" 
-          id="notifications"
-          onchange={toggleNotifications}
-          aria-describedby="notifications-help"
-        />
-        <label for="notifications" class="checkbox-label">
-          Enable notifications
-        </label>
-        <div id="notifications-help" class="field-help">Receive email notifications for updates</div>
-      </div>
-      
-      <button 
-        onclick={handleSave}
-        onkeydown={handleKeyDown}
-        class="save-btn"
-        aria-label="Save profile changes"
-      >
-        <span aria-hidden="true">💾</span>
-        <span>Save Changes</span>
-      </button>
+        
+        <div class="checkbox-group">
+          <input 
+            type="checkbox" 
+            id="notifications"
+            onchange={toggleNotifications}
+            aria-describedby="notifications-help"
+          />
+          <label for="notifications">Enable notifications</label>
+          <div id="notifications-help" class="help-text">
+            Receive email updates about your profile activity
+          </div>
+        </div>
+        
+        <button 
+          type="submit"
+          onclick={handleSave}
+          onkeydown={handleKeyDown}
+          style="background: #28a745; color: white;"
+          role="button"
+          tabindex="0"
+          aria-label="Save profile changes"
+        >
+          💾 Save Profile
+        </button>
+      </fieldset>
     </form>
 
-    <div 
-      role="status" 
-      aria-live="polite" 
-      aria-atomic="true"
-      class="sr-live-region"
-      data-id="live-region"
-    ></div>
+    <!-- Live region for dynamic updates -->
+    <div aria-live="polite" aria-atomic="true" class="sr-only">
+      <template if:true={showSuccessMessage}>
+        <div role="status" aria-label="Success message">
+          Profile updated successfully
+        </div>
+      </template>
+      
+      <template if:true={errorMessage}>
+        <div role="alert" aria-label="Error message">
+          Error: {errorMessage}
+        </div>
+      </template>
+    </div>
 
+    <!-- Success message with proper styling -->
     <template if:true={showSuccessMessage}>
-      <div 
-        class="success-msg" 
-        role="alert"
-        aria-live="assertive"
-      >
-        <span aria-hidden="true">✓</span>
-        <span>Profile updated successfully</span>
+      <div class="success-msg" role="status" aria-live="polite">
+        <span class="success-icon" aria-hidden="true">✓</span>
+        Profile updated successfully
       </div>
     </template>
     
+    <!-- Error message with proper association -->
     <template if:true={errorMessage}>
-      <div 
-        class="error-msg" 
-        role="alert"
-        aria-live="assertive"
-        aria-describedby="error-description"
-      >
-        <span aria-hidden="true">⚠</span>
-        <span id="error-description">{errorMessage}</span>
+      <div class="error-msg" role="alert" aria-live="assertive">
+        <span class="error-icon" aria-hidden="true">⚠️</span>
+        {errorMessage}
       </div>
     </template>
 
-    <table class="user-stats" role="table" aria-label="User statistics">
+    <!-- Data table with proper headers -->
+    <table class="user-stats" role="table" aria-labelledby="stats-heading">
+      <caption id="stats-heading">User Statistics</caption>
       <thead>
         <tr>
           <th scope="col">Metric</th>
@@ -207,118 +176,117 @@
         <tr>
           <th scope="row">Rating</th>
           <td>
-            <div 
-              class="rating-container" 
-              role="group" 
-              aria-label="Rate user performance from 1 to 5 stars"
-            >
+            <div class="rating-container" role="radiogroup" aria-labelledby="rating-label">
+              <span id="rating-label" class="sr-only">Rate this profile from 1 to 5 stars</span>
               <button 
-                class="rating-star"
+                onclick={handleRating} 
+                onkeydown={handleKeyDown}
                 data-rating="1"
-                onclick={handleRating}
-                onkeydown={handleKeyDown}
-                aria-label="Rate 1 star"
-                aria-pressed={isRatingSelected1}
+                role="radio"
+                aria-checked={isRatingSelected}
+                aria-label="1 star rating"
+                tabindex="0"
               >⭐</button>
               <button 
-                class="rating-star"
+                onclick={handleRating} 
+                onkeydown={handleKeyDown}
                 data-rating="2"
-                onclick={handleRating}
-                onkeydown={handleKeyDown}
-                aria-label="Rate 2 stars"
-                aria-pressed={isRatingSelected2}
+                role="radio"
+                aria-checked={isRatingSelected}
+                aria-label="2 star rating"
+                tabindex="-1"
               >⭐</button>
               <button 
-                class="rating-star"
+                onclick={handleRating} 
+                onkeydown={handleKeyDown}
                 data-rating="3"
-                onclick={handleRating}
-                onkeydown={handleKeyDown}
-                aria-label="Rate 3 stars"
-                aria-pressed={isRatingSelected3}
+                role="radio"
+                aria-checked={isRatingSelected}
+                aria-label="3 star rating"
+                tabindex="-1"
               >⭐</button>
               <button 
-                class="rating-star"
+                onclick={handleRating} 
+                onkeydown={handleKeyDown}
                 data-rating="4"
-                onclick={handleRating}
-                onkeydown={handleKeyDown}
-                aria-label="Rate 4 stars"
-                aria-pressed={isRatingSelected4}
+                role="radio"
+                aria-checked={isRatingSelected}
+                aria-label="4 star rating"
+                tabindex="-1"
               >⭐</button>
               <button 
-                class="rating-star"
-                data-rating="5"
-                onclick={handleRating}
+                onclick={handleRating} 
                 onkeydown={handleKeyDown}
-                aria-label="Rate 5 stars"
-                aria-pressed={isRatingSelected5}
+                data-rating="5"
+                role="radio"
+                aria-checked={isRatingSelected}
+                aria-label="5 star rating"
+                tabindex="-1"
               >⭐</button>
+              <span aria-live="polite" aria-atomic="true" class="sr-only">
+                Current rating: {user.rating} out of 5 stars
+              </span>
             </div>
-            <span class="sr-only">Current rating: {user.rating} out of 5 stars</span>
           </td>
         </tr>
       </tbody>
     </table>
 
-<<<<<<< HEAD
+    <!-- Modal trigger with proper accessibility -->
     <button 
       onclick={openModal}
       onkeydown={handleKeyDown}
       class="view-details"
+      role="button"
+      tabindex="0"
       aria-label="View full profile details"
       aria-haspopup="dialog"
-      data-id="modal-trigger"
     >
-=======
-    <!-- ADA Issue: Modal trigger without proper accessibility -->
-    <div onclick={openModal} class="view-details" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){this.click()}" role="button" tabindex="0" role="button" tabindex="0">
->>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       <span>View Full Profile</span>
       <span class="arrow" aria-hidden="true">→</span>
     </button>
 
+    <!-- Modal with proper focus management -->
     <template if:true={isModalOpen}>
-<<<<<<< HEAD
       <div 
         class="modal-overlay"
-        onclick={handleOverlayClick}
-        role="presentation"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
-        <div 
-          class="modal-content"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
-          data-id="modal-content"
-        >
-          <button 
-            onclick={closeModal}
-            onkeydown={handleKeyDown}
-            class="close-btn"
-            aria-label="Close dialog"
-          >
-            <span aria-hidden="true">×</span>
-          </button>
-=======
-      <div class="modal-overlay">
         <div class="modal-content">
-          <!-- ADA Issue: Close button without label -->
-          <button onclick={closeModal} class="close-btn" role="button" tabindex="0" type="button" aria-label="Button" type="button" aria-label="Button">×</button>
->>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
-          
-          <div class="modal-body">
+          <div class="modal-header">
             <h2 id="modal-title">Full Profile Details</h2>
-            <div id="modal-description">Complete information about the user profile</div>
+            <button 
+              onclick={closeModal}
+              onkeydown={handleKeyDown}
+              class="close-btn"
+              role="button"
+              tabindex="0"
+              aria-label="Close profile details modal"
+            >×</button>
+          </div>
+          
+          <div class="modal-body" id="modal-description">
+            <p>Complete profile information and settings would be displayed here.</p>
             
             <nav aria-label="Profile actions">
-              <a href="/profile/edit" aria-label="Edit your profile">Edit Profile</a>
+              <a 
+                href="/profile/edit" 
+                onclick={handleEditProfile}
+                onkeydown={handleKeyDown}
+                aria-label="Edit full profile"
+              >Edit Profile</a>
+              
               <a 
                 href="/profile/delete" 
-                class="delete-link"
-                aria-label="Delete your profile - this action cannot be undone"
-              >
-                Delete Profile
-              </a>
+                onclick={handleDeleteProfile}
+                onkeydown={handleKeyDown}
+                style="color: red;"
+                aria-label="Delete profile permanently"
+                role="button"
+              >Delete Profile</a>
             </nav>
           </div>
         </div>
