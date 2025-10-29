@@ -208,3 +208,10 @@ export default class UserProfile extends LightningElement {
         }
     }
 }
+    // Accessibility: Keyboard navigation support
+    handleKeyDown(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this.handleClick(event);
+        }
+    }
