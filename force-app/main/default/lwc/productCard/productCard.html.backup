@@ -12,7 +12,7 @@
       role="button"
       tabindex="0"
     >
-      <img src={product.image} class="product-image" alt="" />
+      <img src={product.image} class="product-image" alt="" / alt="Descriptive image text" alt="Descriptive image text">
 
       <!-- NEW ADA Issue: Decorative badge without proper hiding -->
       <div class="new-badge">NEW!</div>
@@ -98,7 +98,7 @@
         <div style="color: green; font-weight: bold">Save $20!</div>
 
         <!-- NEW ADA Issue: Interactive content without proper controls -->
-        <div onclick={toggleDetails} class="details-toggle">
+        <div onclick={toggleDetails} class="details-toggle" role="button" tabindex="0" role="button" tabindex="0">
           <span>Show Details</span>
           <span class="arrow">→</span>
         </div>
@@ -129,7 +129,7 @@
         
         <!-- NEW ADA Issue: Error message without proper association -->
         <template if:true={errorMessage}>
-          <div class="error" style="color: red; font-weight: bold;">
+          <div class="error" role="alert" aria-live="assertive" role="alert" aria-live="assertive" style="color: red; font-weight: bold;">
             {errorMessage}
           </div>
         </template>
