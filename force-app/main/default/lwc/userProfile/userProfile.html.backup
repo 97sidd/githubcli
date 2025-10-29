@@ -1,20 +1,56 @@
 <template>
-  <!-- ADA Issue: Missing document language and skip navigation -->
-  <div class="user-profile-container">
-    <!-- ADA Issue: Missing main landmark -->
-    
-    <!-- ADA Issue: Image without alt text -->
+  <div class="user-profile-container" role="main">
     <div class="profile-header">
-      <img src={user.profilePicture} class="profile-image" / alt="Image description needed">
+<<<<<<< HEAD
+      <img 
+        src={user.profilePicture} 
+        class="profile-image" 
+        alt={user.imageAltText}
+      />
+=======
+      <img src={user.profilePicture} class="profile-image" / alt="Image description needed" alt="Descriptive image text">
+>>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       
-      <!-- ADA Issue: Status indicator using color only -->
-      <span class="status-indicator" style="background-color: green;"></span>
+      <span 
+        class="status-indicator" 
+        style="background-color: green;"
+        role="status"
+        aria-label="Online status: Active"
+      ></span>
       
-      <!-- ADA Issue: Heading hierarchy issues (should start with h1) -->
-      <h3>{user.name}</h3>
-      <h5>{user.title}</h5>
+      <h1 class="profile-name">{user.name}</h1>
+      <h2 class="profile-title">{user.title}</h2>
     </div>
 
+<<<<<<< HEAD
+    <div class="action-buttons" role="toolbar" aria-label="Profile actions">
+      <button 
+        class="edit-btn" 
+        onclick={handleEdit}
+        onkeydown={handleKeyDown}
+        aria-label="Edit profile"
+      >
+        <span aria-hidden="true">✏️</span>
+        <span class="sr-only">Edit</span>
+      </button>
+      <button 
+        class="delete-btn" 
+        onclick={handleDelete}
+        onkeydown={handleKeyDown}
+        aria-label="Delete profile"
+      >
+        <span aria-hidden="true">🗑️</span>
+        <span class="sr-only">Delete</span>
+      </button>
+      <button 
+        class="share-btn" 
+        onclick={handleShare}
+        onkeydown={handleKeyDown}
+        aria-label="Share profile"
+      >
+        <span aria-hidden="true">📤</span>
+        <span class="sr-only">Share</span>
+=======
     <!-- ADA Issue: Interactive elements without keyboard support -->
     <div class="action-buttons">
       <span onclick={handleEdit} class="edit-btn">✏️</span>
@@ -25,10 +61,10 @@
     <!-- ADA Issue: Form without proper structure -->
     <div class="profile-form">
       <!-- ADA Issue: Input without label -->
-      <input type="text" placeholder="Enter your name" value={user.name} onchange={handleNameChange} / aria-required="true">
+      <input type="text" placeholder="Enter your name" value={user.name} onchange={handleNameChange} / aria-required="true" aria-required="true" aria-label="Text input field">
       
       <!-- ADA Issue: Required field not indicated -->
-      <input type="email" placeholder="Email address" value={user.email} / aria-required="true">
+      <input type="email" placeholder="Email address" value={user.email} / aria-required="true" aria-required="true" aria-label="Email input field">
       
       <!-- ADA Issue: Select without label -->
       <select onchange={handleDepartmentChange}>
@@ -43,68 +79,247 @@
       <span onclick={toggleNotifications}>Enable notifications</span>
       
       <!-- ADA Issue: Button without descriptive text -->
-      <button onclick={handleSave} style="background: #28a745; color: white;" role="button" tabindex="0">
+      <button onclick={handleSave} style="background: #28a745; color: white;" role="button" tabindex="0" type="button" aria-label="Button">
         💾
+>>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       </button>
     </div>
 
-    <!-- ADA Issue: Dynamic content without live region -->
+    <form class="profile-form" aria-label="User profile form">
+      <div class="form-field">
+        <label for="name-input" class="form-label">
+          Name <span class="required-indicator" aria-label="required">*</span>
+        </label>
+        <input 
+          id="name-input"
+          type="text" 
+          value={user.name} 
+          onchange={handleNameChange}
+          aria-required="true"
+          aria-describedby="name-help"
+          required
+        />
+        <div id="name-help" class="field-help">Enter your full name</div>
+      </div>
+      
+      <div class="form-field">
+        <label for="email-input" class="form-label">
+          Email Address <span class="required-indicator" aria-label="required">*</span>
+        </label>
+        <input 
+          id="email-input"
+          type="email" 
+          value={user.email}
+          onchange={handleEmailChange}
+          aria-required="true"
+          aria-describedby="email-help"
+          required
+        />
+        <div id="email-help" class="field-help">Enter a valid email address</div>
+      </div>
+      
+      <div class="form-field">
+        <label for="department-select" class="form-label">Department</label>
+        <select 
+          id="department-select"
+          onchange={handleDepartmentChange}
+          aria-describedby="department-help"
+        >
+          <option value="">Choose department</option>
+          <option value="engineering">Engineering</option>
+          <option value="marketing">Marketing</option>
+          <option value="sales">Sales</option>
+        </select>
+        <div id="department-help" class="field-help">Select your department</div>
+      </div>
+      
+      <div class="form-field checkbox-field">
+        <input 
+          type="checkbox" 
+          id="notifications"
+          onchange={toggleNotifications}
+          aria-describedby="notifications-help"
+        />
+        <label for="notifications" class="checkbox-label">
+          Enable notifications
+        </label>
+        <div id="notifications-help" class="field-help">Receive email notifications for updates</div>
+      </div>
+      
+      <button 
+        onclick={handleSave}
+        onkeydown={handleKeyDown}
+        class="save-btn"
+        aria-label="Save profile changes"
+      >
+        <span aria-hidden="true">💾</span>
+        <span>Save Changes</span>
+      </button>
+    </form>
+
+    <div 
+      role="status" 
+      aria-live="polite" 
+      aria-atomic="true"
+      class="sr-live-region"
+      data-id="live-region"
+    ></div>
+
     <template if:true={showSuccessMessage}>
-      <div class="success-msg" style="color: green;">
-        ✓ Profile updated successfully
+      <div 
+        class="success-msg" 
+        role="alert"
+        aria-live="assertive"
+      >
+        <span aria-hidden="true">✓</span>
+        <span>Profile updated successfully</span>
       </div>
     </template>
     
-    <!-- ADA Issue: Error message without proper association -->
     <template if:true={errorMessage}>
-      <div class="error-msg" style="color: red;">
-        {errorMessage}
+      <div 
+        class="error-msg" 
+        role="alert"
+        aria-live="assertive"
+        aria-describedby="error-description"
+      >
+        <span aria-hidden="true">⚠</span>
+        <span id="error-description">{errorMessage}</span>
       </div>
     </template>
 
-    <!-- ADA Issue: Table without proper headers -->
-    <table class="user-stats">
-      <tr>
-        <td>Projects</td>
-        <td>{user.projectCount}</td>
-      </tr>
-      <tr>
-        <td>Tasks Completed</td>
-        <td>{user.tasksCompleted}</td>
-      </tr>
-      <tr>
-        <td>Rating</td>
-        <!-- ADA Issue: Rating display without screen reader support -->
-        <td>
-          <span onclick={handleRating} data-rating="1">⭐</span>
-          <span onclick={handleRating} data-rating="2">⭐</span>
-          <span onclick={handleRating} data-rating="3">⭐</span>
-          <span onclick={handleRating} data-rating="4">⭐</span>
-          <span onclick={handleRating} data-rating="5">⭐</span>
-        </td>
-      </tr>
+    <table class="user-stats" role="table" aria-label="User statistics">
+      <thead>
+        <tr>
+          <th scope="col">Metric</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Projects</th>
+          <td>{user.projectCount}</td>
+        </tr>
+        <tr>
+          <th scope="row">Tasks Completed</th>
+          <td>{user.tasksCompleted}</td>
+        </tr>
+        <tr>
+          <th scope="row">Rating</th>
+          <td>
+            <div 
+              class="rating-container" 
+              role="group" 
+              aria-label="Rate user performance from 1 to 5 stars"
+            >
+              <button 
+                class="rating-star"
+                data-rating="1"
+                onclick={handleRating}
+                onkeydown={handleKeyDown}
+                aria-label="Rate 1 star"
+                aria-pressed={isRatingSelected1}
+              >⭐</button>
+              <button 
+                class="rating-star"
+                data-rating="2"
+                onclick={handleRating}
+                onkeydown={handleKeyDown}
+                aria-label="Rate 2 stars"
+                aria-pressed={isRatingSelected2}
+              >⭐</button>
+              <button 
+                class="rating-star"
+                data-rating="3"
+                onclick={handleRating}
+                onkeydown={handleKeyDown}
+                aria-label="Rate 3 stars"
+                aria-pressed={isRatingSelected3}
+              >⭐</button>
+              <button 
+                class="rating-star"
+                data-rating="4"
+                onclick={handleRating}
+                onkeydown={handleKeyDown}
+                aria-label="Rate 4 stars"
+                aria-pressed={isRatingSelected4}
+              >⭐</button>
+              <button 
+                class="rating-star"
+                data-rating="5"
+                onclick={handleRating}
+                onkeydown={handleKeyDown}
+                aria-label="Rate 5 stars"
+                aria-pressed={isRatingSelected5}
+              >⭐</button>
+            </div>
+            <span class="sr-only">Current rating: {user.rating} out of 5 stars</span>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
+<<<<<<< HEAD
+    <button 
+      onclick={openModal}
+      onkeydown={handleKeyDown}
+      class="view-details"
+      aria-label="View full profile details"
+      aria-haspopup="dialog"
+      data-id="modal-trigger"
+    >
+=======
     <!-- ADA Issue: Modal trigger without proper accessibility -->
-    <div onclick={openModal} class="view-details" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){this.click()}">
+    <div onclick={openModal} class="view-details" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){this.click()}" role="button" tabindex="0">
+>>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       <span>View Full Profile</span>
-      <span class="arrow">→</span>
-    </div>
+      <span class="arrow" aria-hidden="true">→</span>
+    </button>
 
-    <!-- ADA Issue: Modal without proper focus management -->
     <template if:true={isModalOpen}>
+<<<<<<< HEAD
+      <div 
+        class="modal-overlay"
+        onclick={handleOverlayClick}
+        role="presentation"
+      >
+        <div 
+          class="modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+          aria-describedby="modal-description"
+          data-id="modal-content"
+        >
+          <button 
+            onclick={closeModal}
+            onkeydown={handleKeyDown}
+            class="close-btn"
+            aria-label="Close dialog"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+=======
       <div class="modal-overlay">
         <div class="modal-content">
           <!-- ADA Issue: Close button without label -->
-          <button onclick={closeModal} class="close-btn" role="button" tabindex="0">×</button>
+          <button onclick={closeModal} class="close-btn" role="button" tabindex="0" type="button" aria-label="Button">×</button>
+>>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
           
           <div class="modal-body">
-            <!-- ADA Issue: Content without proper structure -->
-            <div>Full profile details would go here...</div>
+            <h2 id="modal-title">Full Profile Details</h2>
+            <div id="modal-description">Complete information about the user profile</div>
             
-            <!-- ADA Issue: Links without descriptive text -->
-            <a href="/profile/edit">Click here</a>
-            <a href="/profile/delete" style="color: red;">Delete</a>
+            <nav aria-label="Profile actions">
+              <a href="/profile/edit" aria-label="Edit your profile">Edit Profile</a>
+              <a 
+                href="/profile/delete" 
+                class="delete-link"
+                aria-label="Delete your profile - this action cannot be undone"
+              >
+                Delete Profile
+              </a>
+            </nav>
           </div>
         </div>
       </div>

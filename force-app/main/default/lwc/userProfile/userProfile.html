@@ -8,7 +8,7 @@
         alt={user.imageAltText}
       />
 =======
-      <img src={user.profilePicture} class="profile-image" / alt="Image description needed" alt="Descriptive image text">
+      <img src={user.profilePicture} class="profile-image" / alt="Image description needed" alt="Descriptive image text" alt="Descriptive image text">
 >>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       
       <span 
@@ -61,10 +61,10 @@
     <!-- ADA Issue: Form without proper structure -->
     <div class="profile-form">
       <!-- ADA Issue: Input without label -->
-      <input type="text" placeholder="Enter your name" value={user.name} onchange={handleNameChange} / aria-required="true" aria-required="true" aria-label="Text input field">
+      <input type="text" placeholder="Enter your name" value={user.name} onchange={handleNameChange} / aria-required="true" aria-required="true" aria-label="Text input field" aria-required="true" aria-label="Text input field">
       
       <!-- ADA Issue: Required field not indicated -->
-      <input type="email" placeholder="Email address" value={user.email} / aria-required="true" aria-required="true" aria-label="Email input field">
+      <input type="email" placeholder="Email address" value={user.email} / aria-required="true" aria-required="true" aria-label="Email input field" aria-required="true" aria-label="Email input field">
       
       <!-- ADA Issue: Select without label -->
       <select onchange={handleDepartmentChange}>
@@ -79,7 +79,7 @@
       <span onclick={toggleNotifications}>Enable notifications</span>
       
       <!-- ADA Issue: Button without descriptive text -->
-      <button onclick={handleSave} style="background: #28a745; color: white;" role="button" tabindex="0" type="button" aria-label="Button">
+      <button onclick={handleSave} style="background: #28a745; color: white;" role="button" tabindex="0" type="button" aria-label="Button" type="button" aria-label="Button">
         💾
 >>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       </button>
@@ -270,7 +270,7 @@
     >
 =======
     <!-- ADA Issue: Modal trigger without proper accessibility -->
-    <div onclick={openModal} class="view-details" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){this.click()}" role="button" tabindex="0">
+    <div onclick={openModal} class="view-details" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){this.click()}" role="button" tabindex="0" role="button" tabindex="0">
 >>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
       <span>View Full Profile</span>
       <span class="arrow" aria-hidden="true">→</span>
@@ -303,7 +303,7 @@
       <div class="modal-overlay">
         <div class="modal-content">
           <!-- ADA Issue: Close button without label -->
-          <button onclick={closeModal} class="close-btn" role="button" tabindex="0" type="button" aria-label="Button">×</button>
+          <button onclick={closeModal} class="close-btn" role="button" tabindex="0" type="button" aria-label="Button" type="button" aria-label="Button">×</button>
 >>>>>>> 537748f348400d857b9e616447beaaf12e78b8c3
           
           <div class="modal-body">

@@ -6,96 +6,206 @@ export default class UserProfile extends LightningElement {
         title: 'Software Engineer',
         email: 'john.doe@company.com',
         profilePicture: '/assets/images/default-avatar.jpg',
+        imageAltText: 'Profile picture of John Doe',
         projectCount: 12,
         tasksCompleted: 156,
-        rating: 4
+        rating: 4,
+        department: '',
+        notificationsEnabled: false
     };
 
     @track showSuccessMessage = false;
     @track errorMessage = '';
     @track isModalOpen = false;
+    modalTriggerElement = null;
 
-    // ADA Issue: Missing keyboard event handlers for interactive elements
+    connectedCallback() {
+        this.setupKeyboardListeners();
+    }
+
+    disconnectedCallback() {
+        this.removeKeyboardListeners();
+    }
+
+    renderedCallback() {
+        if (this.isModalOpen) {
+            this.focusModal();
+        }
+    }
+
+    setupKeyboardListeners() {
+        document.addEventListener('keydown', this.handleEscapeKey.bind(this));
+    }
+
+    removeKeyboardListeners() {
+        document.removeEventListener('keydown', this.handleEscapeKey.bind(this));
+    }
+
+    handleEscapeKey(event) {
+        if (event.key === 'Escape' && this.isModalOpen) {
+            this.closeModal();
+        }
+    }
+
+    handleKeyDown(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            event.target.click();
+        }
+    }
+
     handleEdit() {
         console.log('Edit clicked');
-        // ADA Issue: No screen reader announcement
+        this.announceToScreenReader('Opening profile editor');
     }
 
     handleDelete() {
         console.log('Delete clicked');
-        // ADA Issue: No confirmation dialog with proper accessibility
+        const confirmed = confirm('Are you sure you want to delete this profile? This action cannot be undone.');
+        if (confirmed) {
+            this.announceToScreenReader('Profile deletion confirmed');
+        } else {
+            this.announceToScreenReader('Profile deletion cancelled');
+        }
     }
 
     handleShare() {
         console.log('Share clicked');
-        // ADA Issue: No feedback to user about share action
+        this.announceToScreenReader('Profile share options opened');
     }
 
     handleNameChange(event) {
-        this.user.name = event.target.value;
-        // ADA Issue: No validation feedback
+        this.user = { ...this.user, name: event.target.value };
+        if (!event.target.value) {
+            this.handleError('Name is required');
+        } else {
+            this.errorMessage = '';
+        }
+    }
+
+    handleEmailChange(event) {
+        this.user = { ...this.user, email: event.target.value };
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(event.target.value)) {
+            this.handleError('Please enter a valid email address');
+        } else {
+            this.errorMessage = '';
+        }
     }
 
     handleDepartmentChange(event) {
-        this.user.department = event.target.value;
-        // ADA Issue: No announcement of selection change
+        this.user = { ...this.user, department: event.target.value };
+        this.announceToScreenReader(`Department changed to ${event.target.value || 'none selected'}`);
     }
 
-    // ADA Issue: Missing keyboard support for checkbox
-    toggleNotifications() {
-        console.log('Notifications toggled');
-        // ADA Issue: No state announcement
+    toggleNotifications(event) {
+        this.user = { ...this.user, notificationsEnabled: event.target.checked };
+        const status = event.target.checked ? 'enabled' : 'disabled';
+        this.announceToScreenReader(`Notifications ${status}`);
     }
 
     handleSave() {
-        // ADA Issue: No loading state indication
-        this.showSuccessMessage = true;
+        if (!this.user.name || !this.user.email) {
+            this.handleError('Please fill in all required fields');
+            return;
+        }
+
+        this.announceToScreenReader('Saving profile changes...');
         
-        // ADA Issue: Message disappears without user control
         setTimeout(() => {
-            this.showSuccessMessage = false;
-        }, 3000);
-        
-        // ADA Issue: No focus management after save
+            this.showSuccessMessage = true;
+            this.announceToScreenReader('Profile updated successfully');
+            
+            setTimeout(() => {
+                this.showSuccessMessage = false;
+            }, 5000);
+        }, 500);
     }
 
-    // ADA Issue: Rating interaction without keyboard support
     handleRating(event) {
-        const rating = event.currentTarget.dataset.rating;
-        this.user.rating = parseInt(rating);
-        // ADA Issue: No announcement of rating change
+        const rating = parseInt(event.currentTarget.dataset.rating);
+        this.user = { ...this.user, rating };
+        this.announceToScreenReader(`Rating set to ${rating} out of 5 stars`);
     }
 
-    // ADA Issue: Modal opening without focus management
+    get isRatingSelected1() {
+        return this.user.rating >= 1 ? 'true' : 'false';
+    }
+
+    get isRatingSelected2() {
+        return this.user.rating >= 2 ? 'true' : 'false';
+    }
+
+    get isRatingSelected3() {
+        return this.user.rating >= 3 ? 'true' : 'false';
+    }
+
+    get isRatingSelected4() {
+        return this.user.rating >= 4 ? 'true' : 'false';
+    }
+
+    get isRatingSelected5() {
+        return this.user.rating >= 5 ? 'true' : 'false';
+    }
+
     openModal() {
+        this.modalTriggerElement = document.activeElement;
         this.isModalOpen = true;
-        // ADA Issue: Focus not moved to modal
-        // ADA Issue: No escape key handler
-        // ADA Issue: Background not properly hidden from screen readers
+        this.announceToScreenReader('Profile details dialog opened');
     }
 
-    // ADA Issue: Modal closing without returning focus
     closeModal() {
         this.isModalOpen = false;
-        // ADA Issue: Focus not returned to trigger element
+        this.announceToScreenReader('Profile details dialog closed');
+        
+        if (this.modalTriggerElement) {
+            setTimeout(() => {
+                const triggerButton = this.template.querySelector('[data-id="modal-trigger"]');
+                if (triggerButton) {
+                    triggerButton.focus();
+                }
+            }, 100);
+        }
     }
 
-    // ADA Issue: No error handling with accessibility considerations
+    handleOverlayClick(event) {
+        if (event.target.classList.contains('modal-overlay')) {
+            this.closeModal();
+        }
+    }
+
+    focusModal() {
+        setTimeout(() => {
+            const modalContent = this.template.querySelector('[data-id="modal-content"]');
+            if (modalContent) {
+                const closeButton = modalContent.querySelector('.close-btn');
+                if (closeButton) {
+                    closeButton.focus();
+                }
+            }
+        }, 100);
+    }
+
     handleError(message) {
         this.errorMessage = message;
-        // ADA Issue: Error not announced to screen readers
-        // ADA Issue: No focus management for errors
+        this.announceToScreenReader(`Error: ${message}`);
+        
+        setTimeout(() => {
+            const errorElement = this.template.querySelector('.error-msg');
+            if (errorElement) {
+                errorElement.focus();
+            }
+        }, 100);
     }
 
-    // ADA Issue: Missing lifecycle methods for accessibility setup
-    connectedCallback() {
-        // ADA Issue: No initial focus management
-        // ADA Issue: No keyboard event listeners setup
-    }
-
-    // ADA Issue: No cleanup of accessibility features
-    disconnectedCallback() {
-        // ADA Issue: Event listeners not removed
+    announceToScreenReader(message) {
+        const liveRegion = this.template.querySelector('[data-id="live-region"]');
+        if (liveRegion) {
+            liveRegion.textContent = '';
+            setTimeout(() => {
+                liveRegion.textContent = message;
+            }, 100);
+        }
     }
 }
     // Accessibility: Keyboard navigation support
